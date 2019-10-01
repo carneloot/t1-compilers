@@ -1,6 +1,10 @@
 #include <iostream>
+#include <regalloc.hpp>
 
 int main(int argc, char *argv[]) {
-    std::cout << "Hello World!" << std::endl;
+    Regalloc regalloc;
+
+    regalloc.readInput();
+
     return 0;
 }

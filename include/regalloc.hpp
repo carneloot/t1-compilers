@@ -6,6 +6,13 @@ public:
     virtual void readInput();
 
 private:
+    /**
+     * @brief Valor do K a ser testado
+     */
     int k;
-    Graph *graph;
+
+    /**
+     * @brief Grafo de teste
+     */
+    Reg::Graph *graph;
 };

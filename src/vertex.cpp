@@ -17,7 +17,3 @@ int Reg::Vertex::getId() {
 int Reg::Vertex::getColor() {
     return this->color;
 }
-
-bool Reg::Vertex::operator ==(Reg::Vertex *other) {
-    return this->id == other->id;
-}

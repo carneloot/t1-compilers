@@ -22,13 +22,18 @@ public:
     ~Edge();
 
     /**
-     * @brief Compara duas arestas
+     * @brief Retorna o vertice 1
      * 
-     * @param other outra aresta a ser comparada
-     * @return true se forem iguais
-     * @return false de forem diferentes
+     * @return int id do vertice 1
      */
-    bool operator ==(Reg::Edge *other);
+    int getV1();
+
+    /**
+     * @brief Retorna o vertice 2
+     * 
+     * @return int id do vertice 2
+     */
+    int getV2();
 
 private:
     /**

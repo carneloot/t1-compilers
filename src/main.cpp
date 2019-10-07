@@ -6,5 +6,7 @@ int main(int argc, char *argv[]) {
 
     regalloc.readInput();
 
+    regalloc.exportToDot("./grafo.dot");
+
     return 0;
 }

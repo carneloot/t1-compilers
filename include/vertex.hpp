@@ -40,15 +40,6 @@ public:
      */
     int getColor();
 
-    /**
-     * @brief Compara dois vertices
-     * 
-     * @param other outro vertice a ser comparado
-     * @return true se forem iguais
-     * @return false se forem diferentes
-     */
-    bool operator ==(Reg::Vertex *other);
-
 private:
     /**
      * @brief Identificação do vertice

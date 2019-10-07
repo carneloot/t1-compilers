@@ -1,8 +1,8 @@
 #ifndef __GRAPH__
 #define __GRAPH__
 
-#include <list>
-#include <utility>
+#include <vector>
+#include <fstream>
 #include "vertex.hpp"
 #include "edge.hpp"
 
@@ -39,20 +39,30 @@ public:
     void addEdge(int v1, int v2);
 
     /**
-     * @brief Remove elementos repetidos das listas
+     * @brief Exporta o grafo no formato graphviz
+     * 
+     * @param file arquivo para qual será gravada as informações
      */
-    void clearLists();
+    void exportToDot(std::ofstream &file);
+
+    /**
+     * @brief Pega o vertice por um id
+     * 
+     * @param id id a ser pesquisado
+     * @return Reg::Vertex* o vertice encontrado. Caso não encontre, retorna nullptr
+     */
+    Reg::Vertex *getVertexById(int id);
 
 private:
     /**
      * @brief Vertices
      */
-    std::list<Reg::Vertex *> vertices;
+    std::vector<Reg::Vertex *> vertices;
 
     /**
      * @brief Arestas
      */
-    std::list<Reg::Edge *> edges;
+    std::vector<Reg::Edge *> edges;
 
     /**
      * @brief Identificação do grafo

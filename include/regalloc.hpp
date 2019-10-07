@@ -2,8 +2,23 @@
 
 class Regalloc {
 public:
+
+    /**
+     * @brief Construtor padrão do Regalloc
+     */
     Regalloc();
-    virtual void readInput();
+
+    /**
+     * @brief Le a entrada específica do professor
+     */
+    void readInput();
+
+    /**
+     * @brief Exporta o grafo para um arquivo .dot.
+     * 
+     * @param filepath caminho para o arquivo a ser guardado
+     */
+    void exportToDot(const std::string filepath);
 
 private:
     /**

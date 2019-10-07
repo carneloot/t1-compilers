@@ -1,6 +1,12 @@
 #include <iostream>
+#include <regalloc.hpp>
 
 int main(int argc, char *argv[]) {
-    std::cout << "Hello World!" << std::endl;
+    Regalloc regalloc;
+
+    regalloc.readInput();
+
+    regalloc.exportToDot("./grafo.dot");
+
     return 0;
 }

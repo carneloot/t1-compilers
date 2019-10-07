@@ -2,28 +2,26 @@ NAME='regalloc'
 
 echo "Criando arquivo \"$NAME.zip\" para enviar."
 
-# Cria pasta
-mkdir -p $NAME
-
 # Remove o .zip antigo
 rm -f $NAME.zip
 
+# Cria pasta
+mkdir -p $NAME
+
 # Copia os arquivos necessarios
-cp -r src $NAME/
-cp LEIA-ME.txt $NAME/
-cp Makefile $NAME/src/
+cp -r src/* $NAME/
+cp -r include/* $NAME/
+cp Makefile $NAME/
 
 # Muda os parametros do Makefile
-sed -i -e 's/= src/= ./g' $NAME/src/Makefile
-sed -i -e 's/= build/= ..\/build/g' $NAME/src/Makefile
-sed -i -e 's/= bin/= ./g' $NAME/src/Makefile
-sed -i -e 's/= $(SRCDIR)/= ./g' $NAME/src/Makefile
-
-# Removendo o que deve ser removido
-sed -i -e 's/DEBUG = 1/DEBUG = 0/g' $NAME/src/Makefile
+sed -i -e 's/= src/= ./g' $NAME/Makefile
+sed -i -e 's/= build/= ./g' $NAME/Makefile
+sed -i -e 's/= bin/= ./g' $NAME/Makefile
+sed -i -e 's/= include/= ./g' $NAME/Makefile
+sed -i -e 's/DEBUG = 1/DEBUG = 0/g' $NAME/Makefile
 
 # Compacta a pasta
-zip $NAME -r $NAME/ -q
+zip -qrj $NAME $NAME/*
 
 # Remove a pasta
 rm -rf $NAME/

@@ -31,13 +31,13 @@ void Reg::Graph::exportToDot(std::ofstream &file) {
     file << "strict graph {" << std::endl;
 
     for (auto vertex : this->vertices) {
-        file << vertex->getId() << "[label=\""
-            << vertex->getId() << "\n" << vertex->getColor()
+        file << "\t" << vertex->getId() << "[label=\""
+            << vertex->getId() << "\\n" << vertex->getColor()
             << "\"];" << std::endl;
     }
 
     for (auto edge : this->edges) {
-        file << edge->getV1() << " -- " << edge->getV2() << ";" << std::endl;
+        file << "\t" << edge->getV1() << " -- " << edge->getV2() << ";" << std::endl;
     }
 
     file << "}" << std::endl;

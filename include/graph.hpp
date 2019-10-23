@@ -2,6 +2,7 @@
 #define __GRAPH__
 
 #include <vector>
+#include <map>
 #include <fstream>
 #include "vertex.hpp"
 #include "edge.hpp"
@@ -57,7 +58,7 @@ private:
     /**
      * @brief Vertices
      */
-    std::vector<Reg::Vertex *> vertices;
+    std::map<int, Reg::Vertex *> vertices;
 
     /**
      * @brief Arestas

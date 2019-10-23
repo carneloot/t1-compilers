@@ -8,21 +8,20 @@ Reg::Graph::Graph(int id) {
 Reg::Graph::~Graph() {}
 
 void Reg::Graph::addVertex(int id) {
-    auto vertexFound = getVertexById(id);
-    if (!vertexFound) {
-        vertices.push_back(new Reg::Vertex(id));
+    if (vertices.find(id) == vertices.end()) {
+        Reg::Vertex *vertex = new Reg::Vertex(id);
+        vertices.insert({ id, vertex });
     }
 }
 
 void Reg::Graph::addEdge(int id1, int id2) {
-    edges.push_back(new Reg::Edge(id1, id2));
+    Reg::Edge *edge = new Reg::Edge(id1, id2);
+    edges.push_back(edge);
 }
 
 Reg::Vertex *Reg::Graph::getVertexById(int id) {
-    for (auto it = vertices.begin(); it != vertices.end(); it++) {
-        if ((*it)->getId() == id) {
-            return *it;
-        }
+    if (vertices.find(id) != vertices.end()) {
+        return vertices.find(id)->second;
     }
     return nullptr;
 }
@@ -30,7 +29,8 @@ Reg::Vertex *Reg::Graph::getVertexById(int id) {
 void Reg::Graph::exportToDot(std::ofstream &file) {
     file << "strict graph {" << std::endl;
 
-    for (auto vertex : this->vertices) {
+    for (auto it = vertices.begin(); it != vertices.end(); it++) {
+        Reg::Vertex *vertex = (*it).second;
         file << "\t" << vertex->getId() << "[label=\""
             << vertex->getId() << "\\n" << vertex->getColor()
             << "\"];" << std::endl;

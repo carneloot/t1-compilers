@@ -17,6 +17,9 @@ void Reg::Graph::addVertex(int id) {
 void Reg::Graph::addEdge(int id1, int id2) {
     Reg::Edge *edge = new Reg::Edge(id1, id2);
     edges.push_back(edge);
+
+    Reg::Vertex *v1 = this->getVertexById(id1);
+    v1->addDegree();
 }
 
 Reg::Vertex *Reg::Graph::getVertexById(int id) {
@@ -31,8 +34,9 @@ void Reg::Graph::exportToDot(std::ofstream &file) {
 
     for (auto it = vertices.begin(); it != vertices.end(); it++) {
         Reg::Vertex *vertex = (*it).second;
-        file << "\t" << vertex->getId() << "[label=\""
-            << vertex->getId() << "\\n" << vertex->getColor()
+        file << "\t" << vertex->getId() << "[label=\"" << vertex->getId()
+            << "\\n" << vertex->getColor()
+            << "\\n" << vertex->getDegree()
             << "\"];" << std::endl;
     }
 

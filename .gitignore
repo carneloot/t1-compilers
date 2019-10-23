@@ -121,3 +121,7 @@ out
 vgcore.*
 
 t*.sh
+
+
+grafo.dot
+grafo.png

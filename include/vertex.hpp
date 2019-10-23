@@ -27,6 +27,11 @@ public:
     void paint(int color);
 
     /**
+     * @brief Adiciona um grau para o vertice
+     */
+    void addDegree();
+
+    /**
      * @brief Retorna o id do vertice
      * 
      * @return int id do vertice
@@ -40,6 +45,13 @@ public:
      */
     int getColor();
 
+    /**
+     * @brief Retorna o grau do vertice
+     * 
+     * @return int grau do vertice
+     */
+    int getDegree();
+
 private:
     /**
      * @brief Identificação do vertice
@@ -50,6 +62,14 @@ private:
      * @brief Cor atual do vertice
      */
     int color = -1;
+
+    /**
+     * @brief Grau do vertice
+     * 
+     * Indica o numero de arestas ligadas a ele
+     * 
+     */
+    int degree = 0;
 };
 
 }

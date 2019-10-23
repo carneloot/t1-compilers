@@ -17,3 +17,11 @@ int Reg::Vertex::getId() {
 int Reg::Vertex::getColor() {
     return this->color;
 }
+
+int Reg::Vertex::getDegree() {
+    return this->degree;
+}
+
+void Reg::Vertex::addDegree() {
+    this->degree++;
+}

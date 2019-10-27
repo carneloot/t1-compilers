@@ -11,7 +11,13 @@ public:
     /**
      * @brief Le a entrada específica do professor
      */
-    void readInput();
+    void build();
+
+    void rebuild();
+
+    void simplify(int k);
+
+    bool assign(int k);
 
     /**
      * @brief Exporta o grafo para um arquivo .dot.
@@ -19,6 +25,13 @@ public:
      * @param filepath caminho para o arquivo a ser guardado
      */
     void exportToDot(const std::string filepath);
+
+    /**
+     * @brief Retorna o valor de K
+     */
+    int getK();
+
+    int getGraphNumber();
 
 private:
     /**

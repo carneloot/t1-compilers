@@ -6,7 +6,7 @@
 
 Regalloc::Regalloc() {}
 
-void Regalloc::readInput() {
+void Regalloc::build() {
 
     // Getting graph name
     std::string line;
@@ -48,6 +48,11 @@ void Regalloc::readInput() {
         graph->addVertex(v2Id);
         graph->addEdge(vId, v2Id);
     }
+
+    // Printing Graph info
+    std::cout
+        << "Graph " << graph->getId() << " -> Physical Registers: " << k << std::endl
+        << "----------------------------------------" << std::endl;
 }
 
 // For testing purposes
@@ -61,4 +66,26 @@ void Regalloc::exportToDot(const std::string filepath) {
     }
 
     file.close();
+}
+
+int Regalloc::getK() {
+    return k;
+}
+
+int Regalloc::getGraphNumber() {
+    return graph->getId();
+}
+
+void Regalloc::simplify(int k) {
+    std::cout << "Simplifying" << std::endl;
+}
+
+bool Regalloc::assign(int k) {
+    std::cout << "Assigning" << std::endl;
+
+    return (k > 5);
+}
+
+void Regalloc::rebuild() {
+    
 }

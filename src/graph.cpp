@@ -46,3 +46,7 @@ void Reg::Graph::exportToDot(std::ofstream &file) {
 
     file << "}" << std::endl;
 }
+
+int Reg::Graph::getId() {
+    return id;
+}

@@ -23,6 +23,8 @@ public:
      * @brief Destrutor padrão
      */
     ~Graph();
+
+    int getId();
     
     /**
      * @brief Adiciona um vertice ao grafo

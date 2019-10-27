@@ -1,6 +1,10 @@
 #include "vertex.hpp"
 
-Reg::Vertex::Vertex(int id) : id(id) {}
+Reg::Vertex::Vertex(int id, bool physical) : id(id), physical(physical) {
+    if (physical) {
+        color = id;
+    }
+}
 
 Reg::Vertex::~Vertex() {}
 
@@ -24,4 +28,12 @@ int Reg::Vertex::getDegree() {
 
 void Reg::Vertex::addDegree() {
     this->degree++;
+}
+
+void Reg::Vertex::subDegree() {
+    this->degree--;
+}
+
+bool Reg::Vertex::isPhysical() {
+    return this->physical;
 }

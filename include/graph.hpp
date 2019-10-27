@@ -25,13 +25,17 @@ public:
     ~Graph();
 
     int getId();
-    
+
+    bool isEmpty();
+
     /**
      * @brief Adiciona um vertice ao grafo
      * 
      * @param id vertice a ser adicionado
      */
-    void addVertex(int id);
+    void addVertex(int id, bool physical);
+
+    void removeVertex(int id);
 
     /**
      * @brief Adiciona uma aresta no grafo
@@ -56,6 +60,8 @@ public:
      */
     Reg::Vertex *getVertexById(int id);
 
+    Reg::Vertex *getVertexToBeRemoved(int k);
+
 private:
     /**
      * @brief Vertices
@@ -66,6 +72,8 @@ private:
      * @brief Arestas
      */
     std::vector<Reg::Edge *> edges;
+
+    int size = 0;
 
     /**
      * @brief Identificação do grafo

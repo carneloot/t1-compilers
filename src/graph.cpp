@@ -15,10 +15,32 @@ Reg::Graph::~Graph() {
     }
 }
 
-void Reg::Graph::addVertex(int id) {
+void Reg::Graph::addVertex(int id, bool physical) {
     if (vertices.find(id) == vertices.end()) {
-        Reg::Vertex *vertex = new Reg::Vertex(id);
+        Reg::Vertex *vertex = new Reg::Vertex(id, physical);
         vertices.insert({ id, vertex });
+
+        if (!physical) {
+            this->size++;
+        }
+    }
+}
+
+void Reg::Graph::removeVertex(int id) {
+    auto it = vertices.find(id);
+
+    if (!it->second->isPhysical()) {
+        this->size--;
+    }
+
+    vertices.erase(it);
+
+    for (auto edge : edges) {
+        if (edge->getV2() == id) {
+            auto v1 = this->getVertexById(edge->getV1());
+            if (v1)
+                v1->subDegree();
+        }
     }
 }
 
@@ -55,6 +77,37 @@ void Reg::Graph::exportToDot(std::ofstream &file) {
     file << "}" << std::endl;
 }
 
+Reg::Vertex *Reg::Graph::getVertexToBeRemoved(int k) {
+    int minDegree = edges.size() + 1;
+    Reg::Vertex *minVertex;
+
+    for (auto it = vertices.begin(); it != vertices.end(); it++) {
+        Reg::Vertex *vertex = it->second;
+        if (vertex->isPhysical()) continue;
+
+        int currDegree = vertex->getDegree();
+
+        // If the degree is smaller
+        if (currDegree < minDegree) {
+            minDegree = currDegree;
+            minVertex = vertex;
+        } else
+        
+        // Else if the degree is the same
+        if (currDegree == minDegree) {
+            if (vertex->getId() < minVertex->getId()) {
+                minVertex = vertex;
+            }
+        }
+    }
+
+    return minVertex;
+}
+
 int Reg::Graph::getId() {
     return id;
+}
+
+bool Reg::Graph::isEmpty() {
+    return this->size == 0;
 }

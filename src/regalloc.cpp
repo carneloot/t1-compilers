@@ -26,36 +26,39 @@ void Regalloc::build() {
     // Getting K
     std::getline(std::cin, line);
     startPos = 2;
-    k = std::stoi(std::string(line, startPos, line.size() - startPos));
+    K = std::stoi(std::string(line, startPos, line.size() - startPos));
 
     // Getting all the edges
     while (std::getline(std::cin, line)) {
         endPos = line.find_first_of(" ");
         startPos = 0;
         int vId = std::stoi(std::string(line, startPos, endPos - startPos));
+        bool v1Phys = vId < K;
 
-        graph->addVertex(vId);
+        graph->addVertex(vId, v1Phys);
 
         startPos = endPos + 5;
 
         endPos = line.find_first_of(" ", startPos);
         while ((endPos = line.find_first_of(" ", startPos)) != std::string::npos) {
             int v2Id = std::stoi(std::string(line, startPos, endPos - startPos));
+            bool v2Phys = v2Id < K;
 
-            graph->addVertex(v2Id);
+            graph->addVertex(v2Id, v2Phys);
             graph->addEdge(vId, v2Id);
 
             startPos = endPos + 1;
         }
         int v2Id = std::stoi(std::string(line, startPos, line.length() - startPos));
+        bool v2Phys = v2Id < K;
 
-        graph->addVertex(v2Id);
+        graph->addVertex(v2Id, v2Phys);
         graph->addEdge(vId, v2Id);
     }
 
     // Printing Graph info
     std::cout
-        << "Graph " << graph->getId() << " -> Physical Registers: " << k << std::endl
+        << "Graph " << graph->getId() << " -> Physical Registers: " << K << std::endl
         << "----------------------------------------" << std::endl;
 }
 
@@ -73,7 +76,7 @@ void Regalloc::exportToDot(const std::string filepath) {
 }
 
 int Regalloc::getK() {
-    return k;
+    return K;
 }
 
 int Regalloc::getGraphNumber() {
@@ -81,7 +84,16 @@ int Regalloc::getGraphNumber() {
 }
 
 void Regalloc::simplify(int k) {
-    std::cout << "Simplifying" << std::endl;
+    while (!graph->isEmpty()) {
+        Reg::Vertex *v = graph->getVertexToBeRemoved(k);
+        graph->removeVertex(v->getId());
+
+        currStash.push_back(v);
+
+        bool potentialSpill = v->getDegree() >= k;
+
+        std::cout << "Push: " << v->getId() << ((potentialSpill) ? " *" : "") << std::endl;
+    }
 }
 
 bool Regalloc::assign(int k) {
@@ -90,6 +102,4 @@ bool Regalloc::assign(int k) {
     return (k > 5);
 }
 
-void Regalloc::rebuild() {
-    
-}
+void Regalloc::rebuild() {}

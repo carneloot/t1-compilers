@@ -1,4 +1,6 @@
 #include "graph.hpp"
+#include <vector>
+#include "vertex.hpp"
 
 class Regalloc {
 public:
@@ -42,10 +44,12 @@ private:
     /**
      * @brief Valor do K a ser testado
      */
-    int k;
+    int K;
 
     /**
      * @brief Grafo de teste
      */
     Reg::Graph *graph;
+
+    std::vector<Reg::Vertex *> currStash;
 };

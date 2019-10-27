@@ -11,7 +11,7 @@ public:
      * 
      * @param id identificacao do vertice
      */
-    Vertex(int id);
+    Vertex(int id, bool physical);
 
     /**
      * @brief Destrutor padrão do vertice
@@ -30,6 +30,11 @@ public:
      * @brief Adiciona um grau para o vertice
      */
     void addDegree();
+
+    /**
+     * @brief Subtrai um grau do vertice
+     */
+    void subDegree();
 
     /**
      * @brief Retorna o id do vertice
@@ -52,6 +57,8 @@ public:
      */
     int getDegree();
 
+    bool isPhysical();
+
 private:
     /**
      * @brief Identificação do vertice
@@ -70,6 +77,8 @@ private:
      * 
      */
     int degree = 0;
+
+    bool physical;
 };
 
 }

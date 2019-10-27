@@ -3,11 +3,11 @@
 #include <regalloc.hpp>
 
 int main(int argc, char *argv[]) {
-    Regalloc regalloc;
+    Regalloc *regalloc = new Regalloc();
 
-    regalloc.build();
+    regalloc->build();
 
-    int K = regalloc.getK();
+    int K = regalloc->getK();
 
     bool gotRight[K - 2];
     for (int k = K; k >= 2; k--) {
@@ -17,24 +17,26 @@ int main(int argc, char *argv[]) {
             << "K = " << k << std::endl
             << std::endl;
 
-        regalloc.simplify(k);
+        regalloc->simplify(k);
 
-        gotRight[k - 2] = regalloc.assign(k);
+        gotRight[k - 2] = regalloc->assign(k);
 
-        regalloc.rebuild();
+        regalloc->rebuild();
     }
 
     std::cout
         << "----------------------------------------" << std::endl
         << "----------------------------------------";
 
-    int graphNumber = regalloc.getGraphNumber();
+    int graphNumber = regalloc->getGraphNumber();
 
     for (int k = K; k >= 2; k--) {
         std::cout << std::endl
             << "Graph " << graphNumber << " -> K = " << std::right << std::setw(2) << k
             << ": " << ((gotRight[k - 2]) ? "Successful Allocation" : "SPILL");
     }
+
+    delete regalloc;
 
     return 0;
 }

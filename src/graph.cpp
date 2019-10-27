@@ -5,7 +5,15 @@ Reg::Graph::Graph(int id) {
     this->id = id;
 }
 
-Reg::Graph::~Graph() {}
+Reg::Graph::~Graph() {
+    for (auto it = edges.begin(); it != edges.end(); it++) {
+        delete (*it);
+    }
+
+    for (auto it = vertices.begin(); it != vertices.end(); it++) {
+        delete (*it).second;
+    }
+}
 
 void Reg::Graph::addVertex(int id) {
     if (vertices.find(id) == vertices.end()) {

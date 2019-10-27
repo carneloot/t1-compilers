@@ -6,6 +6,10 @@
 
 Regalloc::Regalloc() {}
 
+Regalloc::~Regalloc() {
+    delete graph;
+}
+
 void Regalloc::build() {
 
     // Getting graph name

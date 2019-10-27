@@ -9,6 +9,11 @@ public:
     Regalloc();
 
     /**
+     * @brief Destrutor padrão do Regalloc
+     */
+    ~Regalloc();
+
+    /**
      * @brief Le a entrada específica do professor
      */
     void build();

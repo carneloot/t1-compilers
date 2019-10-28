@@ -97,7 +97,7 @@ void Regalloc::simplify(int k) {
 }
 
 bool Regalloc::assign(int k) {
-    bool colors[k];
+    bool colors[K];
     while (!currStack.empty()) {
         for (int i = 0; i < k; i++) colors[i] = true;
 

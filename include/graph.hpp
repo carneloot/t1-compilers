@@ -37,6 +37,10 @@ public:
 
     void removeVertex(int id);
 
+    void readdVertex(Reg::Vertex *vertex);
+
+    std::vector<Reg::Edge *> getEdges(int id);
+
     /**
      * @brief Adiciona uma aresta no grafo
      * 

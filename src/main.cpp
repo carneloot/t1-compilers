@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
         gotRight[k - 2] = regalloc->assign(k);
 
         regalloc->rebuild();
-        break;
     }
 
     std::cout
@@ -35,7 +34,6 @@ int main(int argc, char *argv[]) {
         std::cout << std::endl
             << "Graph " << graphNumber << " -> K = " << std::right << std::setw(2) << k
             << ": " << ((gotRight[k - 2]) ? "Successful Allocation" : "SPILL");
-        break;
     }
 
     delete regalloc;

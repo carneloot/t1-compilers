@@ -88,7 +88,7 @@ void Regalloc::simplify(int k) {
         Reg::Vertex *v = graph->getVertexToBeRemoved(k);
         graph->removeVertex(v->getId());
 
-        currStash.push_back(v);
+        currStack.push_back(v);
 
         bool potentialSpill = v->getDegree() >= k;
 
@@ -97,9 +97,51 @@ void Regalloc::simplify(int k) {
 }
 
 bool Regalloc::assign(int k) {
-    std::cout << "Assigning" << std::endl;
+    bool colors[k];
+    while (!currStack.empty()) {
+        for (int i = 0; i < k; i++) colors[i] = true;
 
-    return (k > 5);
+        Reg::Vertex *vertex = currStack.back();
+        currStack.pop_back();
+
+        graph->readdVertex(vertex);
+        std::vector<Reg::Edge *> adjacentEdges = graph->getEdges(vertex->getId());
+
+        // Check the available colors
+        for (auto edge : adjacentEdges) {
+            auto v2 = graph->getVertexById(edge->getV2());
+            if (v2 == nullptr) continue;
+            int color = v2->getColor();
+            if (color >= 0) {
+                colors[color] = false;
+            }
+        }
+
+        // Tries to use the first available color
+        int i;
+        for (i = 0; i < k; i++) {
+            if (colors[i]) {
+                vertex->paint(i);
+                std::cout << "Pop: " << vertex->getId() << " -> " << i << std::endl;
+                break;
+            }
+        }
+
+        // If no colors are available, SPILL
+        if (i == k) {
+            std::cout << "Pop: " << vertex->getId() << " -> NO COLOR AVAILABLE" << std::endl;
+            return false;
+        }
+    }
+
+    return true;
 }
 
-void Regalloc::rebuild() {}
+void Regalloc::rebuild() {
+    while (!currStack.empty()) {
+        Reg::Vertex *vertex = currStack.back();
+        currStack.pop_back();
+
+        graph->readdVertex(vertex);
+    }
+}

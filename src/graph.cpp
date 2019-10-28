@@ -101,7 +101,30 @@ Reg::Vertex *Reg::Graph::getVertexToBeRemoved(int k) {
         }
     }
 
-    return minVertex;
+    if (minVertex->getDegree() < k) {
+        return minVertex;
+    }
+
+    // Potential spill
+
+    Reg::Vertex *maxVertex = vertices.begin()->second;
+
+    for (auto it = vertices.begin(); it != vertices.end(); it++) {
+        Reg::Vertex *vertex = it->second;
+        if (vertex->isPhysical()) continue;
+
+        int currDegree = vertex->getDegree();
+
+        if (currDegree > maxVertex->getDegree()) {
+            maxVertex = vertex;
+        } else if (currDegree == maxVertex->getDegree()) {
+            if (vertex->getId() < maxVertex->getId()) {
+                maxVertex = vertex;
+            }
+        }
+    }
+
+    return maxVertex;
 }
 
 int Reg::Graph::getId() {
@@ -110,4 +133,32 @@ int Reg::Graph::getId() {
 
 bool Reg::Graph::isEmpty() {
     return this->size == 0;
+}
+
+void Reg::Graph::readdVertex(Reg::Vertex *vertex) {
+    int id = vertex->getId();
+    if (vertices.find(id) == vertices.end()) {
+        vertices.insert({ id, vertex });
+        this->size++;
+    }
+
+    for (auto edge : edges) {
+        if (edge->getV2() == id) {
+            auto v1 = this->getVertexById(edge->getV1());
+            if (v1)
+                v1->addDegree();
+        }
+    }
+}
+
+std::vector<Reg::Edge *> Reg::Graph::getEdges(int id) {
+    std::vector<Reg::Edge *> adjacentEdges;
+
+    for (auto edge : edges) {
+        if (edge->getV1() == id) {
+            adjacentEdges.push_back(edge);
+        }
+    }
+
+    return adjacentEdges;
 }

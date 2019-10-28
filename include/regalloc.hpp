@@ -51,5 +51,5 @@ private:
      */
     Reg::Graph *graph;
 
-    std::vector<Reg::Vertex *> currStash;
+    std::vector<Reg::Vertex *> currStack;
 };

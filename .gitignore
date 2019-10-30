@@ -1,5 +1,6 @@
 
 # Created by https://www.gitignore.io/api/c,git,code,linux
+# Edit at https://www.gitignore.io/?templates=c,git,code,linux
 
 ### C ###
 # Prerequisites
@@ -56,14 +57,26 @@ Mkfile.old
 dkms.conf
 
 ### Code ###
-# Visual Studio Code - https://code.visualstudio.com/
-.settings/
-.vscode/
-tsconfig.json
-jsconfig.json
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 ### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
 *.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### Linux ###
 *~
@@ -108,3 +121,7 @@ out
 vgcore.*
 
 t*.sh
+
+
+grafo.dot
+grafo.png

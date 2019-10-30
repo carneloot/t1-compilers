@@ -46,11 +46,6 @@ INCLUDES := $(shell find $(INCDIR) -type f -name "*.h*")
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.$(EXT)=$(OBJDIR)/%.o)
 rm       = rm -rf
 
-test:
-	@echo $(SOURCES)
-	@echo $(INCLUDES)
-	@echo $(OBJECTS)
-
 $(BINDIR)/$(TARGET): $(OBJECTS) $(INCLUDES)
 	@mkdir -p $(dir $@)
 	@$(LINKER) $(OBJECTS) $(LFLAGS) -o $@

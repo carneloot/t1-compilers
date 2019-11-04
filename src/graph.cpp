@@ -1,15 +1,12 @@
 #include "graph.hpp"
 #include <iostream>
+#include <climits>
 
 Reg::Graph::Graph(int id) {
     this->id = id;
 }
 
 Reg::Graph::~Graph() {
-    for (auto it = edges.begin(); it != edges.end(); it++) {
-        delete (*it);
-    }
-
     for (auto it = vertices.begin(); it != vertices.end(); it++) {
         delete (*it).second;
     }
@@ -28,27 +25,23 @@ void Reg::Graph::addVertex(int id, bool physical) {
 
 void Reg::Graph::removeVertex(int id) {
     auto it = vertices.find(id);
+    auto vertex = it->second;
 
-    if (!it->second->isPhysical()) {
+    if (!vertex->isPhysical()) {
         this->size--;
     }
 
     vertices.erase(it);
 
-    for (auto edge : edges) {
-        if (edge->getV2() == id) {
-            auto v1 = this->getVertexById(edge->getV1());
-            if (v1)
-                v1->subDegree();
-        }
+    for (auto adjacent : vertex->getAdjacents()) {
+        adjacent->subDegree();
     }
 }
 
 void Reg::Graph::addEdge(int id1, int id2) {
-    Reg::Edge *edge = new Reg::Edge(id1, id2);
-    edges.push_back(edge);
-
     Reg::Vertex *v1 = this->getVertexById(id1);
+    Reg::Vertex *v2 = this->getVertexById(id2);
+    v1->addAdjacent(v2);
     v1->addDegree();
 }
 
@@ -68,17 +61,18 @@ void Reg::Graph::exportToDot(std::ofstream &file) {
             << "\\n" << vertex->getColor()
             << "\\n" << vertex->getDegree()
             << "\"];" << std::endl;
+
+        for (auto v2 : vertex->getAdjacents()) {
+            file << "\t" << vertex->getId() << " -- " << v2->getId() << ";" << std::endl;
+        }
     }
 
-    for (auto edge : this->edges) {
-        file << "\t" << edge->getV1() << " -- " << edge->getV2() << ";" << std::endl;
-    }
 
     file << "}" << std::endl;
 }
 
 Reg::Vertex *Reg::Graph::getVertexToBeRemoved(int k) {
-    int minDegree = edges.size() + 1;
+    int minDegree = INT_MAX;
     Reg::Vertex *minVertex;
 
     for (auto it = vertices.begin(); it != vertices.end(); it++) {
@@ -142,23 +136,22 @@ void Reg::Graph::readdVertex(Reg::Vertex *vertex) {
         this->size++;
     }
 
-    for (auto edge : edges) {
-        if (edge->getV2() == id) {
-            auto v1 = this->getVertexById(edge->getV1());
-            if (v1)
-                v1->addDegree();
-        }
+    for (auto adjacent : vertex->getAdjacents()) {
+        adjacent->addDegree();
     }
 }
 
-std::vector<Reg::Edge *> Reg::Graph::getEdges(int id) {
-    std::vector<Reg::Edge *> adjacentEdges;
+std::vector<Reg::Vertex *> Reg::Graph::getAdjacents(int id) {
+    Reg::Vertex *v = this->getVertexById(id);
+    std::vector<Reg::Vertex *> adj = v->getAdjacents();
+    std::vector<Reg::Vertex *> result;
 
-    for (auto edge : edges) {
-        if (edge->getV1() == id) {
-            adjacentEdges.push_back(edge);
+    for (auto v2 : adj) {
+        auto test = this->getVertexById(v2->getId());
+        if (test != nullptr) {
+            result.push_back(v2);
         }
     }
 
-    return adjacentEdges;
+    return result;
 }

@@ -105,12 +105,10 @@ bool Regalloc::assign(int k) {
         currStack.pop_back();
 
         graph->readdVertex(vertex);
-        std::vector<Reg::Edge *> adjacentEdges = graph->getEdges(vertex->getId());
+        std::vector<Reg::Vertex *> adjacentVertex = graph->getAdjacents(vertex->getId());
 
         // Check the available colors
-        for (auto edge : adjacentEdges) {
-            auto v2 = graph->getVertexById(edge->getV2());
-            if (v2 == nullptr) continue;
+        for (auto v2 : adjacentVertex) {
             int color = v2->getColor();
             if (color >= 0) {
                 colors[color] = false;

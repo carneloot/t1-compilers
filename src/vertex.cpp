@@ -37,3 +37,11 @@ void Reg::Vertex::subDegree() {
 bool Reg::Vertex::isPhysical() {
     return this->physical;
 }
+
+void Reg::Vertex::addAdjacent(Reg::Vertex *adjacent) {
+    this->adjacents.push_back(adjacent);
+}
+
+std::vector<Reg::Vertex *> Reg::Vertex::getAdjacents() {
+    return this->adjacents;
+}

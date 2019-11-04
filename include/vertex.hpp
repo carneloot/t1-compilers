@@ -1,6 +1,8 @@
 #ifndef __VERTEX__
 #define __VERTEX__
 
+#include <vector>
+
 namespace Reg {
 
 class Vertex {
@@ -59,6 +61,10 @@ public:
 
     bool isPhysical();
 
+    void addAdjacent(Reg::Vertex *adjacent);
+
+    std::vector<Reg::Vertex *> getAdjacents();
+
 private:
     /**
      * @brief Identificação do vertice
@@ -79,6 +85,8 @@ private:
     int degree = 0;
 
     bool physical;
+
+    std::vector<Reg::Vertex *> adjacents;
 };
 
 }

@@ -5,7 +5,6 @@
 #include <map>
 #include <fstream>
 #include "vertex.hpp"
-#include "edge.hpp"
 
 namespace Reg {
 
@@ -39,7 +38,7 @@ public:
 
     void readdVertex(Reg::Vertex *vertex);
 
-    std::vector<Reg::Edge *> getEdges(int id);
+    std::vector<Reg::Vertex *> getAdjacents(int id);
 
     /**
      * @brief Adiciona uma aresta no grafo
@@ -71,11 +70,6 @@ private:
      * @brief Vertices
      */
     std::map<int, Reg::Vertex *> vertices;
-
-    /**
-     * @brief Arestas
-     */
-    std::vector<Reg::Edge *> edges;
 
     int size = 0;
 
